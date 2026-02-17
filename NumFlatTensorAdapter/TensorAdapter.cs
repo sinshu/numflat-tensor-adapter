@@ -23,6 +23,17 @@ namespace NumFlat
 
             return new TensorSpan<T>(mat.Memory.Span, lengths, strides);
         }
+
+        public static TensorSpan<T> AsTensorSpan<T>(this Vec<T> vec) where T : unmanaged, INumberBase<T>
+        {
+            nint lengths = vec.Count;
+
+            // TensorSpan does not accept non-zero strides for singleton dimensions
+            // when those strides can overlap with another axis.
+            nint strides = vec.Count == 1 ? 0 : vec.Stride;
+
+            return new TensorSpan<T>(vec.Memory.Span, [lengths], [strides]);
+        }
     }
 
 
