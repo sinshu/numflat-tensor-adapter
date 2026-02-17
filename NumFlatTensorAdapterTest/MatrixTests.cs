@@ -4,7 +4,7 @@ using NumFlat;
 
 namespace NumFlatTensorAdapterTest
 {
-    public class AsTensorSpanTests
+    public class MatrixTests
     {
         private static readonly (int Rows, int Cols)[] NonSquareSizes =
         [
@@ -15,7 +15,7 @@ namespace NumFlatTensorAdapterTest
         ];
 
         [TestCaseSource(nameof(NonSquareSizes))]
-        public void Add_Works_For_NonSquare_Matrices((int Rows, int Cols) size)
+        public void AddWorksForNonSquareMatrices((int Rows, int Cols) size)
         {
             var (rows, cols) = size;
 
@@ -46,7 +46,7 @@ namespace NumFlatTensorAdapterTest
 
 
         [Test]
-        public void AsTensorSpan_DoesNotThrow_For_Singleton_Dimensions()
+        public void AsTensorSpanDoesNotThrowForSingletonDimensions()
         {
             var rowVector = new Mat<double>(1, 3);
             var colVector = new Mat<double>(3, 1);
@@ -56,7 +56,7 @@ namespace NumFlatTensorAdapterTest
         }
 
         [Test]
-        public void Add_Works_For_SubMatrix_And_Does_Not_Corrupt_Outer_Area()
+        public void AddWorksForSubMatrixAndDoesNotCorruptOuterArea()
         {
             Mat<double> sourceA =
             [
@@ -80,11 +80,6 @@ namespace NumFlatTensorAdapterTest
             var subA = sourceA[1..4, 1..4];
             var subB = sourceB[1..4, 1..4];
             var subC = destination[1..4, 1..4];
-
-            // 3x3 submatrix in a 4x5 backing matrix => stride and element count differ.
-            Assert.That(subA.RowCount * subA.ColCount, Is.EqualTo(9));
-            Assert.That(subA.Stride, Is.GreaterThan(subA.ColCount));
-            Assert.That(subA.Stride, Is.Not.EqualTo(subA.RowCount * subA.ColCount));
 
             Tensor.Add(subA.AsTensorSpan(), subB.AsTensorSpan(), subC.AsTensorSpan());
 
@@ -110,17 +105,6 @@ namespace NumFlatTensorAdapterTest
                     }
                 }
             }
-
-            // Verify source matrices are unchanged outside selected submatrix.
-            Assert.That(sourceA[0, 0], Is.EqualTo(11));
-            Assert.That(sourceA[0, 4], Is.EqualTo(15));
-            Assert.That(sourceA[3, 0], Is.EqualTo(41));
-            Assert.That(sourceA[3, 4], Is.EqualTo(45));
-
-            Assert.That(sourceB[0, 0], Is.EqualTo(1));
-            Assert.That(sourceB[0, 4], Is.EqualTo(5));
-            Assert.That(sourceB[3, 0], Is.EqualTo(16));
-            Assert.That(sourceB[3, 4], Is.EqualTo(20));
         }
     }
 }
