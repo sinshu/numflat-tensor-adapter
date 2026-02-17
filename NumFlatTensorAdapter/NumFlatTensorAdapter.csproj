@@ -6,6 +6,17 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Nobuaki Tanaka</Authors>
+    <Version>1.0.0</Version>
+    <Title>NumFlatTensorAdapter</Title>
+    <Description>A bridge between the NumFlat numerical library and the .NET System.Numerics.Tensors APIs.</Description>
+    <PackageProjectUrl>https://github.com/sinshu/numflat-tensor-adapter</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/sinshu/numflat-tensor-adapter</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>math;numerics;linear;algebra;matrix;vector;fft;analysis;statistics;clustering;dsp</PackageTags>
+    <PackageReleaseNotes>https://github.com/sinshu/numflat-tensor-adapter/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,6 +26,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <IsAotCompatible>True</IsAotCompatible>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NumFlat" Version="1.2.2" />
