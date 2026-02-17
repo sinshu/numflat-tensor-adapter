@@ -6,8 +6,20 @@ using System.Runtime.CompilerServices;
 
 namespace NumFlat
 {
+    /// <summary>
+    /// Provides extension methods to view NumFlat vectors and matrices as <see cref="TensorSpan{T}"/>.
+    /// </summary>
     public static class TensorAdapter
     {
+        /// <summary>
+        /// Creates a two-dimensional <see cref="TensorSpan{T}"/> that references the same memory as the matrix.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="mat">The source matrix.</param>
+        /// <returns>
+        /// A tensor span with shape <c>(<paramref name="mat"/>.RowCount, <paramref name="mat"/>.ColCount)</c>
+        /// over the matrix storage.
+        /// </returns>
         public static TensorSpan<T> AsTensorSpan<T>(this Mat<T> mat) where T : unmanaged, INumberBase<T>
         {
             Nint2 lengths = default;
@@ -24,6 +36,15 @@ namespace NumFlat
             return new TensorSpan<T>(mat.Memory.Span, lengths, strides);
         }
 
+        /// <summary>
+        /// Creates a one-dimensional <see cref="TensorSpan{T}"/> that references the same memory as the vector.
+        /// </summary>
+        /// <typeparam name="T">The element type.</typeparam>
+        /// <param name="vec">The source vector.</param>
+        /// <returns>
+        /// A tensor span with shape <c>(<paramref name="vec"/>.Count)</c>
+        /// over the vector storage.
+        /// </returns>
         public static TensorSpan<T> AsTensorSpan<T>(this Vec<T> vec) where T : unmanaged, INumberBase<T>
         {
             nint lengths = vec.Count;
