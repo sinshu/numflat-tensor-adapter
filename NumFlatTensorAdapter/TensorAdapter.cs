@@ -14,9 +14,12 @@ namespace NumFlat
             lengths[0] = mat.RowCount;
             lengths[1] = mat.ColCount;
 
+            // TensorSpan does not accept non-zero strides for singleton dimensions
+            // when those strides can overlap with another axis.
+            // NumFlat matrices can be 1xN / Nx1, so normalize the singleton axis stride to 0.
             Nint2 strides = default;
-            strides[0] = 1;
-            strides[1] = mat.Stride;
+            strides[0] = mat.RowCount == 1 ? 0 : 1;
+            strides[1] = mat.ColCount == 1 ? 0 : mat.Stride;
 
             return new TensorSpan<T>(mat.Memory.Span, lengths, strides);
         }
