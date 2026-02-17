@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="NumFlatTensorAdapter/NumFlatTensorAdapter.csproj" />
+  <Project Path="NumFlatTensorAdapterTest/NumFlatTensorAdapterTest.csproj" Id="54c589db-b27a-42d6-bc28-432784af7493" />
+  <Project Path="Workspace/Workspace.csproj" Id="c849d2bf-5b18-473e-81df-a34fbcf8557a" />
+</Solution>
