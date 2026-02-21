@@ -38,7 +38,7 @@ Mat<double> b =
 
 var c = new Mat<double>(3, 3);
 
-// Use a TensorSpan method.
+// You can use methods designed for TensorSpan<T>.
 Tensor.Add(a.AsTensorSpan(), b.AsTensorSpan(), c.AsTensorSpan());
 ```
 
